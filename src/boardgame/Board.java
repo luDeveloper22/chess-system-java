@@ -5,11 +5,11 @@ public class Board {
 	private Integer column;
 	private Piece[][] pieces;
 	
-	private Board() {
+	public Board() {
 		
 	}
 	
-	private Board(Integer row, Integer column) {
+	public Board(Integer row, Integer column) {
 		this.row = row;
 		this.column = column;
 		 pieces = new Piece[row][column];
@@ -29,6 +29,14 @@ public class Board {
 	
 	public void setColumn(Integer column) {
 		this.column = column;
+	}
+	
+	public Piece piece(int row, int column) {
+		return pieces[row][column];
+	
+	}
+	public Piece piece(Position position) {
+		return pieces[position.getRow()][position.getColumn()];
 	}
 
 }
