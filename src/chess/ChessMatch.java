@@ -1,23 +1,19 @@
 package chess;
-import chess.ChessException;
-import chess.pieces.Rock;
-
-import chess.pieces.King;
-
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
+import chess.pieces.King;
+import chess.pieces.Rock;
 
 public class ChessMatch {
 
-	private Board board;
-
+private Board board;
+	
 	public ChessMatch() {
-
 		board = new Board(8, 8);
 		initialSetup();
 	}
-
+	
 	public ChessPiece[][] getPieces() {
 		ChessPiece[][] mat = new ChessPiece[board.getRow()][board.getColumn()];
 		for (int i=0; i<board.getRow(); i++) {
@@ -32,6 +28,7 @@ public class ChessMatch {
 		Position source = sourcePosition.toPosition();
 		Position target = targetPosition.toPosition();
 		validateSourcePosition(source);
+		validateTargetPosition(source, target);
 		Piece capturedPiece = makeMove(source, target);
 		return (ChessPiece)capturedPiece;
 	}
@@ -49,6 +46,12 @@ public class ChessMatch {
 		}
 		if (!board.piece(position).isThereAnyPossibleMove()) {
 			throw new ChessException("There is no possible moves for the chosen piece");
+		}
+	}
+	
+	private void validateTargetPosition(Position source, Position target) {
+		if (!board.piece(source).possibleMove(target)) {
+			throw new ChessException("The chosen piece can't move to target position");
 		}
 	}
 	
@@ -70,7 +73,5 @@ public class ChessMatch {
         placeNewPiece('e', 7, new Rock(board, Color.BLACK));
         placeNewPiece('e', 8, new Rock(board, Color.BLACK));
         placeNewPiece('d', 8, new King(board, Color.BLACK));
-
-}
-	
+	}
 }
